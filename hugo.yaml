@@ -1,0 +1,12 @@
+baseURL: ""
+languageCode: en-us
+title: Siddhartha's Blog
+theme: ["PaperMod"]
+
+params:
+  # disable the special styling for first post
+  disableSpecial1stPost: true
+  
+  # other defaults
+  profileMode:
+    enabled: false
