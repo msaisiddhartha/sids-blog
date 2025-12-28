@@ -227,12 +227,11 @@ We tried it. Here is what happens when you train a Random Forest on the same par
 
 We explored two examples of using Neural Networks as differentiable surrogate models for optimization:
 
-| Feature | Parabola Example (1D) | Rosenbrock Example (2D) |
-| :--- | :--- | :--- |
-| **Complexity** | Simple, Convex | Hard, Non-Convex ("Banana Valley") |
-| **Data Requirements** | Sparse data worked well, even with gaps. | Needed dense sampling ($N=5000$) to capture the valley. |
-| **Key Challenge** | **Interpolation**: Generalizing across missing data regions. | **Scaling**: Function values explode ($>1000$), requiring normalization. |
-| **Solution** | Used `Tanh` activation for smoothness. | Used **Standard Scaling** (Z-score) for inputs and targets. |
+1.  **1D Parabola**: A simple convex problem where the network successfully interpolated across a data gap. We showed that using **Tanh activation** provides a smoother, more robust approximation than ReLU without needing careful seed selection.
+2.  **2D Rosenbrock**: A complex non-convex problem. We demonstrated that **data normalization (standard scaling)** is critical for convergence when inputs and targets have vastly different magnitudes.
+3.  **Comparisons**: We showed that traditional regression methods like **Random Forests fail** at this task because they produce piecewise constant "steps" with zero gradients. While Derivative-Free methods (Genetic Algorithms) can optimize these trees, they require significantly more function evaluations (77 vs. instantaneous) compared to the efficient gradient-based guidance provided by a Neural Network.
+
+By treating the Neural Network not just as a predictor, but as a fully differentiable equation, we unlock the power of gradient-based optimization for any "black box" problem.
 
 ### Summary
 Using Neural Networks for parametric optimization is a powerful technique when:
