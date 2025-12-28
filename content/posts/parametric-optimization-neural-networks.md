@@ -18,7 +18,7 @@ This is where **Neural Networks as Surrogate Models** come in.
 
 ## The Concept
 
-1.  **Surrogate Modeling**: Train a Neural Network to approximate your expensive or unknown function $f(x)$ based on a set of sampled data points.
+1.  **Surrogate Modeling** [1]: Train a Neural Network to approximate your expensive or unknown function $f(x)$ based on a set of sampled data points.
     > **Why this works:** The **Universal Approximation Theorem** guarantees that a feed-forward network with even a single hidden layer (and enough neurons) can approximate any continuous function to an arbitrary degree of accuracy. This massive theoretical flexibility is what allows us to confidently swap out complex physics simulations for a Neural Network.
 2.  **Differentiability**: Unlike the black box function, a Neural Network is fully differentiable.
 3.  **Optimization**: Once trained, we freeze the network's weights. We then treat the *input* $x$ as the trainable parameter. By backpropagating the loss purely with respect to the input, we can use gradient descent to find the optimal $x$ that minimizes the output $y$.
@@ -26,7 +26,7 @@ This is where **Neural Networks as Surrogate Models** come in.
 
 ## Deep Dive: How Neural Networks Approximate Any Function
 
-Before looking at the code, it is worth understanding *why* a Neural Network can mimic your physics equation or simulation. This property is known as the **Universal Approximation Theorem**.
+Before looking at the code, it is worth understanding *why* a Neural Network can mimic your physics equation or simulation. This property is known as the **Universal Approximation Theorem** [2].
 
 ### 1. The Single Neuron
 A single neuron computes a weighted sum of inputs followed by a non-linear activation:
@@ -295,9 +295,9 @@ We tried it. Here is what happens when you train a Random Forest on the same par
 | Integration Feature | Random Forest (Tree-Based) | Neural Network (Differentiable) |
 | :--- | :--- | :--- |
 | **Surface Smoothness** | **Step-wise / Blocky** (Piecewise constant) | **Smooth** (Continuous derivatives) |
-| **Gradient Optimization** | **Impossible** (Gradients are 0 or undefined) | **Excellent** (Backpropagation gives exact direction) |
+| **Gradient Optimization** | Gradients are 0 or undefined | Backpropagation gives exact direction |
 | **Optimization Method** | Genetic Algorithms / Nelder-Mead | Gradient Descent (LBFGS / Adam) |
-| **Efficiency (1D Example)** | **Slow** (~77 evaluations) | **Fast** (Instantaneous gradient Step) |
+| **Iterations** | ~77 evaluations | Instantaneous gradient Step |
 | **Scalability** | Poor (Curse of Dimensionality for search) | High (Gradients guide high-dim search efficiently) |
 
 
@@ -318,3 +318,10 @@ Using Neural Networks for parametric optimization is a powerful technique when:
 3.  **High-dimensional design space**: NNs scale reasonably well to higher dimensions compared to grid search.
 
 By combining the **Universal Approximation** capabilities of Neural Networks with the **Automatic Differentiation** of frameworks like PyTorch, we can solve complex engineering design problems that were previously intractable.
+
+## References
+
+1.  Forrester, A., Sobester, A., & Keane, A. (2008). *Engineering design via surrogate modelling: a practical guide*. John Wiley & Sons.
+2.  Hornik, K., Stinchcombe, M., & White, H. (1989). "Multilayer feedforward networks are universal approximators." *Neural Networks*, 2(5), 359-366.
+
+
