@@ -37,7 +37,7 @@ To make this more realistic, we will:
 1.  **Split Data**: create a training set and a testing set.
 2.  **Create a Gap**: Explicitly **exclude** the region around the optimum ($x \in [1.5, 2.5]$) from the training data. This forces the Neural Network to *interpolate* the shape of the function to find the minimum, rather than just memorizing a data point near $x=2$.
 
-![Optimization Landscape](/images/parabola_optimization.png)
+![Optimization Landscape](/sids-blog/images/parabola_optimization.png)
 
 ```python
 import torch
@@ -139,7 +139,7 @@ $$ f(x, y) = (1 - x)^2 + 100(y - x^2)^2 $$
 
 The global minimum is inside a long, narrow, parabolic shaped flat valley at $(x, y) = (1, 1)$. To find it, our Neural Network must navigate this valley.
 
-![Rosenbrock Contour](/images/rosenbrock_contour.png)
+![Rosenbrock Contour](/sids-blog/images/rosenbrock_contour.png)
 
 ### Normalization is Key
 For functions with large values (the Rosenbrock term $100(y-x^2)^2$ explodes easily), **input/output normalization** is crucial for the Neural Network to learn effectively.
@@ -213,7 +213,7 @@ You might ask: *Why not use a Random Forest or XGBoost? They are often state-of-
 
 We tried it. Here is what happens when you train a Random Forest on the same parabola data and try to find the minimum:
 
-![Random Forest Optimization](/images/rf_opt_comparison.png)
+![Random Forest Optimization](/sids-blog/images/rf_opt_comparison.png)
 
 1.  **Blocky Landscape**: Tree-based models output "steps". The function is not smooth.
 2.  **Gradient Descent Fails**: Gradients are zero on the flat steps and undefined at the jumps. You simply cannot filter derivatives through a tree.
