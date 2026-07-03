@@ -3,6 +3,21 @@ languageCode: en-us
 title: Siddhartha's Blog
 theme: ["PaperMod"]
 
+# Preserve $...$ / $$...$$ math verbatim so Goldmark doesn't mangle
+# underscores and backslashes before MathJax typesets them.
+markup:
+  goldmark:
+    extensions:
+      passthrough:
+        enable: true
+        delimiters:
+          inline:
+            - ["$", "$"]
+            - ["\\(", "\\)"]
+          block:
+            - ["$$", "$$"]
+            - ["\\[", "\\]"]
+
 params:
   # disable the special styling for first post
   disableSpecial1stPost: true

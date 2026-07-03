@@ -8,7 +8,9 @@ deployed to **GitHub Pages** at https://msaisiddhartha.github.io/sids-blog/.
 - **Theme**: PaperMod, pulled as a git submodule at `themes/PaperMod` (see `.gitmodules`).
   Do NOT edit files under `themes/PaperMod` — override via `layouts/` instead.
 - **Math**: MathJax, enabled per-post with `math: true` in front matter. Loaded by
-  `layouts/partials/extend_head.html`.
+  `layouts/partials/extend_head.html`. IMPORTANT: `hugo.yaml` enables the Goldmark
+  **passthrough** extension for `$...$` / `$$...$$` — without it, Hugo's markdown eats
+  underscores and `\;` inside equations and the math renders wrong (silently, no error).
 - **Deploy**: push to `main` → `.github/workflows/deploy.yml` builds with `hugo --minify`
   and publishes `./public` to GitHub Pages. No manual deploy needed.
 
@@ -43,6 +45,32 @@ post — NOT part of the Hugo build:
 - `final_demo.py` — trains a neural-net surrogate of a black-box function, then optimizes
   the input via gradient descent (treating input x as the trainable parameter).
 - `seed_test.py` — runs the same experiment across seeds to check robustness.
+
+## Figure pipeline for the CAE 3D-representations post (`scripts/`)
+- `scripts/figlib.py` — shared paths, matplotlib style, mesh loading + cheap vertex-cluster
+  decimation, SDF slice, etc.
+- `scripts/make_figures.py` — one function per figure; writes `static/images/cae_*.png`.
+  Run: `.venv/bin/python3 scripts/make_figures.py [names...]` (no args = all 7 figures).
+- `scripts/make_topology_gif.py` — animated 3D level-set sweep of a bracket's SDF
+  (voxelize → `scipy` distance transform → `skimage` marching_cubes at swept iso-levels →
+  PIL GIF). Writes `static/images/cae_topology_sweep.gif` (~2.8 MB). Fast (~30s) because it
+  uses the distance transform, NOT slow trimesh proximity. Run: `.venv/bin/python3
+  scripts/make_topology_gif.py [bracket_id]` (default 148).
+- Reads the **SimJEB** bracket dataset from `~/datasets/simjeb/` (outside the repo, ~1.8 GB,
+  do NOT commit). Bracket #148 is the through-line; `all_bracket_metadata.csv` drives the
+  surrogate scatter. The SDF figure is slow (~3 min, uses `rtree` + trimesh proximity).
+- Only the rendered PNGs go in `static/images/` and get committed — never the raw meshes.
+- `static/images/ref_*.png` are NOT script-generated: they're figures pulled from the cited
+  papers (PointNet, MeshGraphNets, DeepSDF, 3D-GAN, DeepCAD) via ar5iv, embedded with
+  "(Image source: …)" attribution captions. Third-party copyrighted — fair-use/educational;
+  confirm before relying on them in anything beyond this personal blog.
+
+## Python venv note
+`.venv/` runs **Python 3.13.7** (Homebrew, `/usr/local/bin/python3.13`), recreated via
+`python3.13 -m venv .venv`. Packages: numpy, scipy, matplotlib, trimesh, scikit-image,
+pandas, networkx, rtree, fast-simplification. Always invoke as `.venv/bin/python3`.
+(History: the original venv was Python 3.9 and broke when the folder was renamed
+"My Files" → "Mac Files"; upgraded to 3.13 so `fast-simplification` works.)
 
 ## Common commands
 ```bash

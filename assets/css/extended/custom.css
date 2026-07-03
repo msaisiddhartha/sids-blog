@@ -1,0 +1,22 @@
+/* Match the body + heading type scale of lilianweng.github.io (PaperMod).
+   PaperMod's default body is 18px; hers is 16px / line-height 1.6.
+   Files in assets/css/extended/ are auto-appended to the theme stylesheet,
+   so this overrides without touching themes/PaperMod. */
+
+body {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.post-content h1 { font-size: 28px; }
+.post-content h2 { font-size: 24px; }
+.post-content h3 { font-size: 18px; }
+.post-content h4 { font-size: 16px; }
+.post-content h5 { font-size: 14px; }
+.post-content h6 { font-size: 12px; }
+
+/* Give section starts room to breathe — the theme ships headings with
+   margin-top:0, so a new section sits too close to the text above it. */
+.post-content h2 { margin-top: 46px; margin-bottom: 14px; }
+.post-content h3 { margin-top: 32px; margin-bottom: 10px; }
+.post-content h4 { margin-top: 24px; margin-bottom: 8px; }
