@@ -1,7 +1,7 @@
 ---
 title: "How Machine Learning Sees Geometry: 3D Representations for Engineering Design"
 date: 2026-07-03T00:00:00-05:00
-draft: true
+draft: false
 tags: ["Machine Learning", "CAE", "Geometric Deep Learning", "Design Optimization"]
 categories: ["Tech"]
 math: true
