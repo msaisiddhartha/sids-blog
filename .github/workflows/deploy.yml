@@ -22,7 +22,10 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: 'latest'
+          # Pinned to match local dev. 'latest' (Hugo 0.163+) breaks the pinned
+          # PaperMod submodule's rss.xml ("can't evaluate field Author") and
+          # deprecates languageCode. Bump this only after testing the theme.
+          hugo-version: '0.152.2'
           extended: true
 
       - name: Build
